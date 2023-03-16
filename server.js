@@ -5,6 +5,7 @@ const session = require("express-session");
 const { v4: uuidv4 } = require("uuid");
 
 const router = require('./router');
+const dashboard = require('./dashboard');
 
 const app = express();
 
@@ -26,23 +27,30 @@ app.use(session({
 }));
 
 app.use('/route', router);
+app.use('/dashboard', dashboard);
 
 // home route
-app.get('/', (req, res) =>{
-    res.render('base', { title : "Login System"});
-})
+// app.get('/', (req, res) =>{
+//     res.render('base', { title : "Login System"});
+// })
 
 // //////////////////////
-app.get('/rslogin', (req, res) =>{
+app.get('/', (req, res) =>{
     res.render('rslogin', { title : "Login System"});
 })
 
-app.post('/rslogin', (req, res) =>{
+app.post('/', (req, res) =>{
     console.log("Dhukse")
     console.log(req.body);
-    res.redirect('/dashboard');
+    var provider = (req.body.flexRadioDefault);
+    if (provider == 'on'){
+        res.redirect("/dashboard/provider");
+    }else{
+        res.redirect("/dashboard/rider");
+    }
+    
 })
 
 
 
-app.listen(port, ()=>{ console.log("Lostening to the server on http://localhost:3000")});
+app.listen(port, ()=>{ console.log("Listening to the server on http://localhost:3000")});
