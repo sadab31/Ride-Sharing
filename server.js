@@ -11,6 +11,34 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+//DATABASE
+var mysql = require("mysql");
+var db = mysql.createConnection({
+ 
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "ridesharing",
+    
+    multipleStatements: true
+ 
+});
+ 
+db.connect(function (error) {
+    if (error) {
+      console.log("Error Connecting to DB");
+    } else {
+      console.log("successfully Connected to DB");
+    }
+  });
+
+
+
+
+
+
+
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }))
 
@@ -36,12 +64,42 @@ app.use('/dashboard', dashboard);
 
 // //////////////////////
 app.get('/', (req, res) =>{
+
+  
     res.render('rslogin', { title : "Login System"});
+    
 })
 
 app.post('/', (req, res) =>{
     console.log("Dhukse")
     console.log(req.body);
+
+    let details ={
+        id: 201012655,
+        name: "Ahnaf",
+        address: "Gulshan",
+        pickup: "Gloria Jeans, Gulshan 1",
+        department: "Microbio",
+        password: "Jhikimiki",
+        email: "mimooo@yahooy.com",
+        phone: 4555555556
+  
+  
+  
+     }
+    let sql="INSERT INTO rider SET ?";
+
+    let query = db.query(sql,details, (err, result) =>{
+       if (err) throw err;
+       console.log(result)
+    //    res.send('Rider info added')
+    });
+  
+
+
+
+
+
     var provider = (req.body.flexRadioDefault);
     if (provider == 'on'){
         res.redirect("/dashboard/provider");
@@ -51,6 +109,47 @@ app.post('/', (req, res) =>{
     
 })
 
+
+app.get('/create', (req, res) =>{
+
+  
+     
+     let sql="CREATE TABLE posts (id int AUTO_INCREMENT, title VARCHAR(255), PRIMARY KEY (id))";
+
+     db.query(sql ,(err, result) =>{
+        if (err) throw err;
+        console.log(result)
+        res.send('psots table created')
+     });
+    
+})
+
+
+app.get('/insert', (req, res) =>{
+
+  
+    let details ={
+        id: 201012655,
+        name: "Ahnaf",
+        address: "Gulshan",
+        pickup: "Gloria Jeans, Gulshan 1",
+        department: "Microbio",
+        password: "Jhikimiki",
+        email: "mimooo@yahooy.com",
+        phone: 4555555556
+  
+  
+  
+     }
+    let sql="INSERT INTO rider SET ?";
+
+    let query = db.query(sql,details, (err, result) =>{
+       if (err) throw err;
+       console.log(result)
+    //    res.send('Rider info added')
+    });
+   
+})
 
 
 app.listen(port, ()=>{ console.log("Listening to the server on http://localhost:3000")});
