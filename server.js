@@ -74,32 +74,6 @@ app.post('/', (req, res) =>{
     console.log("Dhukse")
     console.log(req.body);
 
-    let details ={
-        id: 201012655,
-        name: "Ahnaf",
-        address: "Gulshan",
-        pickup: "Gloria Jeans, Gulshan 1",
-        department: "Microbio",
-        password: "Jhikimiki",
-        email: "mimooo@yahooy.com",
-        phone: 4555555556
-  
-  
-  
-     }
-    let sql="INSERT INTO rider SET ?";
-
-    let query = db.query(sql,details, (err, result) =>{
-       if (err) throw err;
-       console.log(result)
-    //    res.send('Rider info added')
-    });
-  
-
-
-
-
-
     var provider = (req.body.flexRadioDefault);
     if (provider == 'on'){
         res.redirect("/dashboard/provider");
@@ -108,6 +82,78 @@ app.post('/', (req, res) =>{
     }
     
 })
+
+
+app.get('/register', (req, res) =>{  
+    res.render('registration', { title : "Login System"});    
+})
+app.post('/register', (req, res) =>{
+    console.log("Dhukse")
+    let details ={
+        id: req.body.id,
+        name: req.body.name,
+        address: req.body.address,
+        pickup: req.body.pickup,
+        department: req.body.department,
+        password: req.body.password,
+        email: req.body.email,
+        phone: req.body.phone
+       }
+    console.log(details);
+    let details2 ={
+        ...details,
+        vehicleNum: req.body.Vnum,
+        vehicleType: req.body.Vtype,
+        vehicleColor: req.body.Vcolor,
+        vehicleModel: req.body.Vmodel,
+        driverName: req.body.DriverName,
+        driverNum: req.body.DriverNum
+       }
+
+    var provider = (req.body.flexRadioDefault);
+    if (provider == 'on'){
+
+        let sql="INSERT INTO providers SET ?";
+
+        let query = db.query(sql,details2, (err, result) =>{
+        if (err) throw err;
+        console.log(result)
+    
+    });
+
+
+
+        res.redirect("/");
+    }else{
+
+
+        /// Pushing rider data into database
+        let sql="INSERT INTO rider SET ?";
+
+        let query = db.query(sql,details, (err, result) =>{
+        if (err) throw err;
+        console.log(result)
+    
+    });
+
+
+
+        res.redirect("/");
+    }
+    
+})
+
+
+
+
+
+
+
+
+
+
+
+////////////////////// DATABASE ///////////////////
 
 
 app.get('/create', (req, res) =>{

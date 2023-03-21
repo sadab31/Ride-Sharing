@@ -66,10 +66,10 @@
       <div class="col-md-6 col-lg-5">
         <div class="card">
           <div class="card-body">
-            <h2 class="text-center">Login form</h2><br>
+            <h2 class="text-center">Registration form</h2><br>
 
             <h5 class="card-title mb-4">Are you a rider or provider?</h5>
-            <form action="/" method="POST" >
+            <form action="/register" method="POST" >
                 
 
 
@@ -114,21 +114,87 @@
 
 
 
-
-              
+              <br>
+              <div class="mb-3">
+                <label for="password" class="form-label">Full name</label>
+                <input type="text" class="form-control" id="password" name="name" required>
+              </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="email" name="email" required>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="text" class="form-control" id="password" name="password" required>
               </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">id</label>
+                <input type="text" class="form-control" id="password" name="id" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Address</label>
+                <input type="text" class="form-control" id="password" name="address" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Pickup Location</label>
+                <input type="text" class="form-control" id="password" name="pickup" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Department</label>
+                <input type="text" class="form-control" id="password" name="department" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="password" name="phone" required>
+              </div>
+
+
+              <br>
+              <div class="text-center mt-3 border border-secondary pd-5">
+                <h3>Vehicle information section</h3>
+                <p>Ignore if you are not a ride provider</p>
+              </div> <br>
+
+              <!-- Vehicle Section -->
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Vehicle Number</label>
+                <input type="text" class="form-control" id="password" name="Vnum" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Vehicle Type</label>
+                <input type="text" class="form-control" id="password" name="Vtype" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Vehicle Color</label>
+                <input type="text" class="form-control" id="password" name="Vcolor" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Vehicle Model</label>
+                <input type="text" class="form-control" id="password" name="Vmodel" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Driver Name</label>
+                <input type="text" class="form-control" id="password" name="DriverName" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Driver Number</label>
+                <input type="text" class="form-control" id="password" name="DriverNum" required>
+              </div>
+
+
+
+
               
-              <button   type="submit" class="btn btn-primary w-100">Log in</button>
+              <button   type="submit" class="btn btn-primary w-100 ">Sign up</button>
             </form>
             <div class="text-center mt-3">
-              Don't have an account? <a href="/register">Sign up</a>
+              Already have an account? <a href="/">Log in</a>
             </div>
           </div>
         </div>
