@@ -6,31 +6,38 @@ const { v4: uuidv4 } = require("uuid");
 
 const router = require('./router');
 const dashboard = require('./dashboard');
-
+const rider = require('./rider');
 const app = express();
 
 const port = process.env.PORT || 3000;
 
+
+
+
 //DATABASE
-var mysql = require("mysql");
-var db = mysql.createConnection({
+
+var db = require('./db');
+
+
+// var mysql = require("mysql");
+// var db = mysql.createConnection({
  
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "ridesharing",
+//     host: "localhost",
+//     user: "root",
+//     password: "",
+//     database: "ridesharing",
     
-    multipleStatements: true
+//     multipleStatements: true
  
-});
+// });
  
-db.connect(function (error) {
-    if (error) {
-      console.log("Error Connecting to DB");
-    } else {
-      console.log("successfully Connected to DB");
-    }
-  });
+// db.connect(function (error) {
+//     if (error) {
+//       console.log("Error Connecting to DB");
+//     } else {
+//       console.log("successfully Connected to DB");
+//     }
+//   });
 
 
 
@@ -56,6 +63,7 @@ app.use(session({
 
 app.use('/route', router);
 app.use('/dashboard', dashboard);
+app.use('/rider', rider);
 
 // home route
 // app.get('/', (req, res) =>{
@@ -197,5 +205,5 @@ app.get('/insert', (req, res) =>{
    
 })
 
-
+// module.exports = {db};
 app.listen(port, ()=>{ console.log("Listening to the server on http://localhost:3000")});

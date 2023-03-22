@@ -46,9 +46,37 @@
       <h2 class="text-center"> Rider DashBoard </h2> <br><br>
 
 
+      <% if (rideadd == true) { %>
+        <p> valid!!!</p>
+
+        <form action="/rider/details" method="POST" class="m-5 pb-5 " >               
+          <div class="mb-3">
+            <label for="email" class="form-label">From</label>
+            <input type="text" class="form-control" id="email" name="id" required>
+          </div>        
+          <div class="mb-3">
+            <label for="email" class="form-label">To</label>
+            <input type="text" class="form-control" id="email" name="from" required>
+          </div>
+          
+          
+          <button   type="submit" class="btn btn-primary w-100">Sign up</button>
+        </form><br><br>
+       
+       
+       
+        <%} else { %>
+        <p> Not Allowed </p>
+        <% } %>
+
+      
 
 
 
+
+
+
+      <h4>Available rides</h4>
       <div class="row justify-content-center">
         <div class="card-group " style="width: 100rem; ">
           <div class="card" style="width: 10rem;">
