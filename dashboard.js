@@ -5,17 +5,46 @@ var db = require('./db');
 
 
 dashboard.get('/rider', (req, res) => {
-   // res.send("Ye hain rider dashboard")
-   var passedVariable = req.query.valid;
-   console.log(passedVariable)
-   if (passedVariable === "false"){
-      console.log("yessir")
-      res.render("riderDashboard", {rideadd : false})
-   }else{
-      res.render("riderDashboard", {rideadd : true})
-   }
+   var resultx;
+   let sql="SELECT * FROM rideinfo";
+   console.log("eikhane")
+   let query = db.query(sql, (err, results) =>{
+
+   if (err) throw err;
+   console.log(results[0]);
+      
+// res.send("Ye hain rider dashboard")
+var passedVariable = req.query.valid;
+// console.log(passedVariable)
+if (passedVariable === "false"){
+   console.log("yessir")
+   res.render("riderDashboard", {rideadd : false})
+}else{
+   res.render("riderDashboard", { rideadd : true,
+                                  start1 : results[0].start, address1 : results[0].address,
+                                  start2 : results[1].start, address2 : results[1].address,
+                                  start3 : results[2].start, address3 : results[2].address})
+
+}
+
+
+
    
-})
+
+   
+});
+
+
+
+
+   
+
+   
+
+
+
+
+});
 
 dashboard.get('/provider', (req, res) => {
    // res.send("Ye hain provider dashboard")

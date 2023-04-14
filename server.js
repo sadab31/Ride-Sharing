@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const router = require('./router');
 const dashboard = require('./dashboard');
 const rider = require('./rider');
+const payment = require('./payment');
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -64,6 +65,7 @@ app.use(session({
 app.use('/route', router);
 app.use('/dashboard', dashboard);
 app.use('/rider', rider);
+app.use('/payment', payment);
 
 // home route
 // app.get('/', (req, res) =>{

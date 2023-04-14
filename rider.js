@@ -15,14 +15,4 @@ rider.post('/details', (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 module.exports = rider;
