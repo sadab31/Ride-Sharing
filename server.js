@@ -83,15 +83,18 @@ app.get('/', (req, res) =>{
 app.post('/', (req, res) =>{
     console.log("Dhukse")
     console.log(req.body);
+    var id = encodeURIComponent(req.body.id.toString());
+
 
     var provider = (req.body.flexRadioDefault);
     if (provider == 'on'){
-        res.redirect("/dashboard/provider");
+        res.redirect("/dashboard/provider/?id=" +id);
     }else{
         res.redirect("/dashboard/rider");
     }
     
 })
+
 
 
 app.get('/register', (req, res) =>{  

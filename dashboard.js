@@ -3,6 +3,23 @@ var dashboard = express.Router();
 // var {db1} = require('./server.js');
 var db = require('./db');
 
+async function dummyRides() {
+   let sql = "SELECT * FROM rideinfo";
+   let query = await db.query(sql, (err, results) => {
+      if (err) throw err;
+       
+      let dummy = { 
+         start1 : results[0].start, address1 : results[0].address,
+         start2 : results[1].start, address2 : results[1].address,
+         start3 : results[2].start, address3 : results[2].address 
+      };
+      console.log("dummmyyyyyyyyyyyyyyy",dummy);
+      return dummy;
+   });
+   return query;
+}
+
+
 
 function providerMatch(objArray1, objArray2) {
    for (let obj1 of objArray1) {
@@ -90,15 +107,18 @@ if (passedVariable === "false"){
 });
 
 dashboard.get('/provider', (req, res) => {
+
+   var passedVariable = req.query.id;
+
+   console.log("passed id in provider",passedVariable)
    
-     let sql1="SELECT * FROM rideinfo";
-   
+     let sql1="SELECT * FROM rideinfo";   
      let query = db.query(sql1, (err, result1) =>{
       console.log("result 1 RIDEINFO", result1);
      if (err) throw err;    
 
-     let sql2="SELECT * FROM requestedrides";
-   
+
+     let sql2="SELECT * FROM requestedrides";   
      let query = db.query(sql2, (err, result2) =>{
       console.log("result 2 requestedRides", result2);
      if (err) throw err;   
@@ -106,16 +126,31 @@ dashboard.get('/provider', (req, res) => {
      let matchedRiderId=providerMatch(result1,result2);
      console.log("matchedRiderId", matchedRiderId);
 
-     let sql3="SELECT * FROM rider WHERE id = ?";
-   
+
+     let sql3="SELECT * FROM rider WHERE id = ?";   
      let query = db.query(sql3, [matchedRiderId], (err, result3) =>{
       console.log("result 3 riders", result3);
-     if (err) throw err;   
+     if (err) throw err; 
      
      
-     res.render("providerDashboard", {name: result3[0].name, phone: result3[0].phone, unique: generateUniqueCode()});     
+    
+     let sql4="SELECT * FROM rideinfo";
 
+      let query = db.query(sql4, (err, results) =>{
+      if (err) throw err;
+      res.render("providerDashboard", {
+         start1 : results[0].start, address1 : results[0].address,
+         start2 : results[1].start, address2 : results[1].address,
+         start3 : results[2].start, address3 : results[2].address,
+         name: result3[0].name, phone: result3[0].phone, unique: generateUniqueCode()}
+         );  
 
+});
+     
+
+      
+     
+        
   });   
 
 
