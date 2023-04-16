@@ -4,6 +4,34 @@ var dashboard = express.Router();
 var db = require('./db');
 
 
+function providerMatch(objArray1, objArray2) {
+   for (let obj1 of objArray1) {
+     for (let obj2 of objArray2) {
+       if (obj1.start === obj2.start) {
+         return obj2.id;
+       }
+     }
+   }
+   return null;
+ };
+
+
+ function generateUniqueCode(length = 8) {
+   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   let code = '';
+ 
+   for (let i = 0; i < length; i++) {
+     code += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+ 
+   return code;
+ }
+ 
+
+
+
+
+
 dashboard.get('/rider', (req, res) => {
    var resultx;
    let sql="SELECT * FROM rideinfo";
@@ -15,10 +43,14 @@ dashboard.get('/rider', (req, res) => {
       
 // res.send("Ye hain rider dashboard")
 var passedVariable = req.query.valid;
-// console.log(passedVariable)
+var flag=true;
+console.log(passedVariable)
 if (passedVariable === "false"){
    console.log("yessir")
-   res.render("riderDashboard", {rideadd : false})
+   res.render("riderDashboard", { rideadd :false,
+      start1 : results[0].start, address1 : results[0].address,
+      start2 : results[1].start, address2 : results[1].address,
+      start3 : results[2].start, address3 : results[2].address} )
 }else{
    res.render("riderDashboard", { rideadd : true,
                                   start1 : results[0].start, address1 : results[0].address,
@@ -27,29 +59,83 @@ if (passedVariable === "false"){
 
 }
 
+// res.render("riderDashboard", { rideadd : passedVariable,
+//                                      start1 : results[0].start, address1 : results[0].address,
+//                                      start2 : results[1].start, address2 : results[1].address,
+//                                      start3 : results[2].start, address3 : results[2].address})
 
 
+
+
+
+
+
+// var passedVariable = req.query.valid;
+// // console.log(passedVariable)
+// if (passedVariable === "false"){
+//    console.log("yessir")
+//    res.render("riderDashboard", {rideadd : false}, )
+// }else{
+//    res.render("riderDashboard", { rideadd : true,
+//                                   start1 : results[0].start, address1 : results[0].address,
+//                                   start2 : results[1].start, address2 : results[1].address,
+//                                   start3 : results[2].start, address3 : results[2].address})
+
+// }
    
 
    
 });
-
-
-
-
-   
-
-   
-
-
-
 
 });
 
 dashboard.get('/provider', (req, res) => {
-   // res.send("Ye hain provider dashboard")
-   res.render("providerDashboard")
-})
+   
+     let sql1="SELECT * FROM rideinfo";
+   
+     let query = db.query(sql1, (err, result1) =>{
+      console.log("result 1 RIDEINFO", result1);
+     if (err) throw err;    
+
+     let sql2="SELECT * FROM requestedrides";
+   
+     let query = db.query(sql2, (err, result2) =>{
+      console.log("result 2 requestedRides", result2);
+     if (err) throw err;   
+     console.log("After matching the riders id is:", providerMatch(result1,result2)) 
+     let matchedRiderId=providerMatch(result1,result2);
+     console.log("matchedRiderId", matchedRiderId);
+
+     let sql3="SELECT * FROM rider WHERE id = ?";
+   
+     let query = db.query(sql3, [matchedRiderId], (err, result3) =>{
+      console.log("result 3 riders", result3);
+     if (err) throw err;   
+     
+     
+     res.render("providerDashboard", {name: result3[0].name, phone: result3[0].phone, unique: generateUniqueCode()});     
+
+
+  });   
+
+
+
+  });   
+
+
+
+  });   
+
+
+
+
+   
+});
+
+
+
+
+
 
 dashboard.get('/requested', (req, res) => {
    res.send("Ye hain Ride requested")

@@ -49,15 +49,27 @@
       <% if (rideadd == true) { %>
         <p> valid!!!</p>
 
-        <form action="/rider/details" method="POST" class="m-5 pb-5 " >               
+        <form action="/rider/details" method="POST" class="m-5 pb-5 " >
+          <div class="mb-3">
+            <label for="email" class="form-label">ID</label>
+            <input type="text" class="form-control" id="email" name="id" required>
+          </div>                 
           <div class="mb-3">
             <label for="email" class="form-label">From</label>
-            <input type="text" class="form-control" id="email" name="id" required>
+            <input type="text" class="form-control" id="email" name="from" required>
           </div>        
           <div class="mb-3">
             <label for="email" class="form-label">To</label>
-            <input type="text" class="form-control" id="email" name="from" required>
+            <input type="text" class="form-control" id="email" name="to" required>
           </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Pickup</label>
+            <input type="text" class="form-control" id="email" name="pickup" required>
+          </div> 
+          <div class="mb-3">
+            <label for="email" class="form-label">Time</label>
+            <input type="text" class="form-control" id="email" name="time" required>
+          </div> 
           
           
           <button   type="submit" class="btn btn-primary w-100">Sign up</button>
@@ -122,16 +134,18 @@
     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="card-img-top" alt="...">
     <div class="card-body">
       <h2 class="card-title">STATUS BOARD</h2>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <p class="card-text">In this status board you can know more about your requested ride. </p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">An item</li>
-      <li class="list-group-item">A second item</li>
-      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">Payment Status: Unpaid<br><a href="/payment/info" class="card-link">Make Payment</a></li>
+      <li class="list-group-item">Request status:</li>
+      <li class="list-group-item">Unique code:</li>
+      <li class="list-group-item">Phone number:</li>
+      <li class="list-group-item">Unique ride ID:</li>
     </ul>
     <div class="card-body">
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
+      <a href="#" class="card-link">Rate Ride Provider</a>
+      <!-- <a href="#" class="card-link">Another link</a> -->
     </div>
   </div>
   
