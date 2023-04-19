@@ -8,6 +8,7 @@ const router = require('./router');
 const dashboard = require('./dashboard');
 const rider = require('./rider');
 const payment = require('./payment');
+const rate = require('./rate');
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -66,6 +67,7 @@ app.use('/route', router);
 app.use('/dashboard', dashboard);
 app.use('/rider', rider);
 app.use('/payment', payment);
+app.use('/rate', rate);
 
 // home route
 // app.get('/', (req, res) =>{
