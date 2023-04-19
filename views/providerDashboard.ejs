@@ -113,7 +113,25 @@
       <li class="list-group-item">Unique code: <b><%= unique %></b> </li>
       <li class="list-group-item">Riders name: <b><%= name %></b></li>
       <li class="list-group-item">Phone number: <b>0<%= phone %></b></li>
-      <li class="list-group-item">Unique ride ID:</li>
+      <li class="list-group-item">Unique ride ID: <b> <%= uniqueRideId %></li>
+      <br>
+
+      <% if (status == "accepted") { %>
+        <p> You have accepted the ride brother</p> 
+        <a href="/provider/current/<%= id %>" class="btn btn-primary">End ride</a>    
+          
+          
+          
+       
+       
+       
+        <%} else { %>
+          <a href="/provider/current/<%= id %>" class="btn btn-primary">Accept ride</a>
+        <% } %>
+
+
+      
+      <br>
     </ul>
     <div class="card-body">
       <a href="/rate" class="card-link">Rate Rider</a>

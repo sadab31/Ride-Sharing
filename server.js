@@ -9,6 +9,7 @@ const dashboard = require('./dashboard');
 const rider = require('./rider');
 const payment = require('./payment');
 const rate = require('./rate');
+const provider = require('./provider');
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -68,6 +69,8 @@ app.use('/dashboard', dashboard);
 app.use('/rider', rider);
 app.use('/payment', payment);
 app.use('/rate', rate);
+app.use('/provider', provider);
+
 
 // home route
 // app.get('/', (req, res) =>{
