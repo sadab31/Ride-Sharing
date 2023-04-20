@@ -54,39 +54,56 @@ function generateUniqueCode(length = 8) {
 }
 
 dashboard.get("/rider", (req, res) => {
-  var resultx;
+  var passedid = req.query.id;
+  console.log("Passed id", passedid);
+
   let sql = "SELECT * FROM rideinfo";
   console.log("eikhane");
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
-    console.log(results[0]);
 
-    // res.send("Ye hain rider dashboard")
-    var passedVariable = req.query.valid;
-    var flag = true;
-    console.log(passedVariable);
-    if (passedVariable === "false") {
-      console.log("yessir");
-      res.render("riderDashboard", {
-        rideadd: false,
-        start1: results[0].start,
-        address1: results[0].address,
-        start2: results[1].start,
-        address2: results[1].address,
-        start3: results[2].start,
-        address3: results[2].address,
-      });
-    } else {
-      res.render("riderDashboard", {
-        rideadd: true,
-        start1: results[0].start,
-        address1: results[0].address,
-        start2: results[1].start,
-        address2: results[1].address,
-        start3: results[2].start,
-        address3: results[2].address,
-      });
-    }
+    let sql2 = "SELECT * FROM ongoingrides WHERE riderID = ?";
+
+    let query = db.query(sql2, [passedid], (err, result2) => {
+      if (err) throw err;
+      console.log("Result2", result2);
+      console.log(results[0]);
+
+      // res.send("Ye hain rider dashboard")
+      var passedVariable = req.query.valid;
+      var flag = true;
+      console.log(passedVariable);
+      if (result2.length === 0) {
+        result2 = [{ uniqueProviderId: "N/A", uniqueRideId: "N/A" }];
+      }
+      if (passedVariable === "false") {
+        console.log("yessir");
+
+        res.render("riderDashboard", {
+          unique: result2[0].uniqueProviderId,
+          uniqueRideId: result2[0].uniqueRideId,
+          rideadd: false,
+          start1: results[0].start,
+          address1: results[0].address,
+          start2: results[1].start,
+          address2: results[1].address,
+          start3: results[2].start,
+          address3: results[2].address,
+        });
+      } else {
+        res.render("riderDashboard", {
+          unique: result2[0].uniqueProviderId,
+          uniqueRideId: result2[0].uniqueRideId,
+          rideadd: true,
+          start1: results[0].start,
+          address1: results[0].address,
+          start2: results[1].start,
+          address2: results[1].address,
+          start3: results[2].start,
+          address3: results[2].address,
+        });
+      }
+    });
   });
 });
 
