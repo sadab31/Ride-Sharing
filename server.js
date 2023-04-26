@@ -10,6 +10,7 @@ const rider = require("./rider");
 const payment = require("./payment");
 const rate = require("./rate");
 const provider = require("./provider");
+const receipt = require("./receipt");
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -61,6 +62,7 @@ app.use("/rider", rider);
 app.use("/payment", payment);
 app.use("/rate", rate);
 app.use("/provider", provider);
+app.use("/receipt", receipt);
 
 // home route
 // app.get('/', (req, res) =>{
@@ -79,10 +81,44 @@ app.post("/", (req, res) => {
 
   var provider = req.body.flexRadioDefault;
   if (provider == "on") {
-    res.redirect("/dashboard/provider/?id=" + id);
+    let sql1 = "SELECT * FROM providers WHERE id=?";
+
+    let query = db.query(sql1, [id], (err, result1) => {
+      if (err) throw err;
+      console.log(result1);
+      console.log("result1", result1);
+      console.log(typeof req.body.password, typeof result1[0].password);
+      console.log(req.body.password.length, result1[0].password.length);
+      console.log(req.body.password, result1[0].password);
+      if (req.body.password == result1[0].password) {
+        console.log("PASSWORD MATCHED");
+        res.redirect("/dashboard/provider/?id=" + id);
+      } else {
+        res.send("Password incorrect");
+      }
+    });
   } else {
-    res.redirect("/dashboard/rider/?id=" + id);
+    let sql1 = "SELECT * FROM rider WHERE id=?";
+
+    let query = db.query(sql1, [id], (err, result1) => {
+      if (err) throw err;
+      console.log(result1);
+      console.log("result1", result1);
+      console.log(typeof req.body.password, typeof result1[0].password);
+      console.log(req.body.password.length, result1[0].password.length);
+      console.log(req.body.password, result1[0].password);
+      if (req.body.password == result1[0].password) {
+        console.log("PASSWORD MATCHED");
+        res.redirect("/dashboard/rider/?id=" + id);
+      } else {
+        res.send("Password incorrect");
+      }
+    });
   }
+});
+
+app.get("/logout", (req, res) => {
+  res.redirect("/");
 });
 
 app.get("/register", (req, res) => {

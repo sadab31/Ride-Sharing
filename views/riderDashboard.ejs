@@ -36,7 +36,7 @@
               <a class="nav-link" href="#">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a href="/logout" class="nav-link" href="#">Logout</a>
             </li>
           </ul>
         </div>
@@ -72,7 +72,7 @@
           </div> 
           
           
-          <button   type="submit" class="btn btn-primary w-100">Sign up</button>
+          <button   type="submit" class="btn btn-primary w-100">Request Ride</button>
         </form><br><br>
        
        
@@ -137,10 +137,10 @@
       <p class="card-text">In this status board you can know more about your requested ride. </p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Payment Status: Unpaid<br><a href="/payment/info" class="card-link">Make Payment</a></li>
-      <li class="list-group-item">Request status:</li>
-      <li class="list-group-item">Unique code: <b><%= unique %></b></li>
-      <li class="list-group-item">Phone number:</li>
+      <li class="list-group-item">Payment Status: <%= payment %><br><a href="/payment/info" class="card-link">Make Payment</a></li>
+      <li class="list-group-item">Request status: <%= requestStatus %> </li>
+      <li class="list-group-item">Unique code to match: <b><%= unique %></b></li>
+      <li class="list-group-item">Phone number: <%= phone %></li>
       <li class="list-group-item">Unique ride ID: <b> <%= uniqueRideId %></li>
     </ul>
     <div class="card-body">

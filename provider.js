@@ -4,6 +4,7 @@ var provider = express.Router();
 var db = require("./db");
 
 provider.get("/current/:id", (req, res) => {
+  console.log("FRAHIMMm");
   const id = req.params.id;
   console.log("FROM PARAMS", id);
   var status = "accepted";
