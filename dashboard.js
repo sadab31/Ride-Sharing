@@ -1,9 +1,8 @@
 var express = require("express");
 var dashboard = express.Router();
-// var {db1} = require('./server.js');
+
 var db = require("./db");
 
-// Define the getPhoneNumber function
 function getPhoneNumber(id, callback) {
   let sql = `SELECT phone FROM providers WHERE id=${id}`;
   let query = db.query(sql, (err, result) => {
@@ -31,15 +30,14 @@ function findIdByStart(start, objects) {
       return objects[i].id;
     }
   }
-  return null; // Return null if no object with matching start is found
+  return null;
 }
 function paymentChecker(id, objects) {
   console.log("Inside payment", id, objects);
   for (let i = 0; i < objects.length; i++) {
     var temp = objects[i].id.toString();
-    console.log("Inside loop", typeof temp, typeof id);
+
     if (temp === id) {
-      console.log("Inside payment222");
       if (objects[i].status === "paid") {
         return "Paid";
       } else {
@@ -78,7 +76,7 @@ dashboard.get("/rider", (req, res) => {
   console.log("Passed id", passedid);
 
   let sql = "SELECT * FROM rideinfo";
-  console.log("eikhane");
+
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
 
@@ -90,7 +88,6 @@ dashboard.get("/rider", (req, res) => {
 
       console.log(results[0]);
 
-      // res.send("Ye hain rider dashboard")
       var passedVariable = req.query.valid;
       var flag = true;
 
@@ -162,15 +159,10 @@ dashboard.get("/provider", (req, res) => {
   var passedVariable = req.query.id;
 
   var status = req.query.status;
-  console.log(status);
-
-  console.log("passed id in provider", passedVariable);
 
   let sql1 = "SELECT * FROM rideinfo WHERE id = ? ";
   let query = db.query(sql1, [passedVariable], (err, result1) => {
-    console.log("result 1 RIDEINFO", result1);
     if (result1.length === 0) {
-      console.log("Yes inside");
       details = {
         payment: "N/A",
         uniqueRideId: "N/A",
@@ -204,7 +196,6 @@ dashboard.get("/provider", (req, res) => {
 
         let sql3 = "SELECT * FROM rider WHERE id = ?";
         let query = db.query(sql3, [matchedRiderId], (err, result3) => {
-          console.log("result 3 riders", result3);
           if (err) throw err;
 
           let sql4 = "SELECT * FROM rideinfo";
@@ -213,7 +204,6 @@ dashboard.get("/provider", (req, res) => {
             if (err) throw err;
             var uniqueProviderId = generateUniqueCode();
             if (status === "accepted") {
-              console.log("inside accepted");
               let sql5 = "INSERT INTO ongoingrides SET ? ";
               var uniqueRideId = generateUniqueCode();
 
@@ -230,8 +220,7 @@ dashboard.get("/provider", (req, res) => {
                 if (err) throw err;
               });
             }
-            console.log(uniqueProviderId);
-            console.log(results);
+
             let sql6 = "SELECT * FROM payment WHERE id = ?";
 
             let query = db.query(sql6, [passedVariable], (err, result6) => {
@@ -263,12 +252,9 @@ dashboard.get("/provider", (req, res) => {
 
 dashboard.get("/requested", (req, res) => {
   res.send("Ye hain Ride requested");
-  // res.render("riderDashboard")
 });
 
 dashboard.get("/details", (req, res) => {
-  // res.send("Ye hain Ride requested")
-
   res.render("detailsForm");
 });
 
@@ -291,36 +277,6 @@ dashboard.post("/details", (req, res) => {
   });
 
   res.redirect("/dashboard/provider");
-});
-
-//******************************************************* */
-// Define the test route
-dashboard.get("/test", (req, res) => {
-  const id = req.query.id;
-  console.log("printing details");
-
-  let sql = "SELECT * from rideinfo ";
-
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-
-    // Call the getPhoneNumber() function with the ID parameter
-    getPhoneNumber(id, (error, phoneNumber) => {
-      if (error) {
-        res
-          .status(500)
-          .send("An error occurred while retrieving the phone number.");
-      } else {
-        // Log the retrieved phone number
-        console.log(
-          `The phone number of provider with ID ${id} is ${phoneNumber}.`
-        );
-
-        res.send("yeppppiee");
-      }
-    });
-  });
 });
 
 module.exports = dashboard;

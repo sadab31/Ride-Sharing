@@ -75,7 +75,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log("Dhukse");
   console.log(req.body);
   var id = encodeURIComponent(req.body.id.toString());
 
@@ -85,11 +84,7 @@ app.post("/", (req, res) => {
 
     let query = db.query(sql1, [id], (err, result1) => {
       if (err) throw err;
-      console.log(result1);
-      console.log("result1", result1);
-      console.log(typeof req.body.password, typeof result1[0].password);
-      console.log(req.body.password.length, result1[0].password.length);
-      console.log(req.body.password, result1[0].password);
+
       if (req.body.password == result1[0].password) {
         console.log("PASSWORD MATCHED");
         res.redirect("/dashboard/provider/?id=" + id);
@@ -125,7 +120,6 @@ app.get("/register", (req, res) => {
   res.render("registration", { title: "Login System" });
 });
 app.post("/register", (req, res) => {
-  console.log("Dhukse");
   let details = {
     id: req.body.id,
     name: req.body.name,
@@ -190,7 +184,7 @@ app.get("/insert", (req, res) => {
     address: "Gulshan",
     pickup: "Gloria Jeans, Gulshan 1",
     department: "Microbio",
-    password: "Jhikimiki",
+    password: "mimi",
     email: "mimooo@yahooy.com",
     phone: 4555555556,
   };
